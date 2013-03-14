@@ -11,7 +11,7 @@ class Feed_model extends CI_Model{
 CREATE TABLE feeds (
 	id int(11) NOT NULL AUTO_INCREMENT,
 	title text NOT NULL,
-	uri text NOT NULL,
+	uri varchar(767) NOT NULL UNIQUE,
 	icon text,
 	description text,
 	last_update int,
@@ -28,9 +28,17 @@ CREATE TABLE feeds (
 	}
 	
 	public function add($uri,$updateToo=true){
+		
 		$feed = $this->load_feed($uri);
 		if(!$feed || $feed->error){
 			return false;
+		}
+		
+		// Check for duplicates since CI can't.
+		$check = $this->db->get_where('feeds',array('uri'=>$feed->get_permalink()));
+		$check = $check->result();
+		if(count($check) > 0){
+			return $check[0]->id;
 		}
 		
 		$data = array(
@@ -39,7 +47,11 @@ CREATE TABLE feeds (
 			'description' => $feed->get_description()
 		);
 		
-		$this->db->insert('feeds',$data);
+		try{
+			$this->db->insert('feeds',$data);
+		} catch(Exception $e){
+			return false;
+		}
 		$id = $this->db->insert_id();
 		if($updateToo){
 			$this->update($id);

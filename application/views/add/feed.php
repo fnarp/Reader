@@ -9,6 +9,11 @@
 		
 	</div>
 	<div>
+		<?php echo form_label("Group","group") ?>
+		<?php echo form_dropdown('group',$groups,'','group') ?>
+		
+	</div>
+	<div>
 		<?php echo form_submit('go','Add') ?>
 	</div>
 </form>

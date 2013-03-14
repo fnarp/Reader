@@ -3,6 +3,7 @@
 			
 			<div class="btn-group">
 				<a class="btn" href="<?php echo site_url("feeds/add") ?>">Add Feed</a>
+				<a class="btn" href="<?php echo site_url("groups/add") ?>">New Folder</a>
 			</div>
 			
 			<ul class="nav nav-tabs nav-stacked">

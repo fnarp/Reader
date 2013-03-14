@@ -1,9 +1,7 @@
-<h1><?php echo $feed->title ?></h1>
-
-<p><?php echo $feed->description ?></p>
+<h1><?php echo $usergroup->title ?></h1>
 
 <?php if(count($items->result()) == 0): ?>
-<p>There are no items in this feed. Check the site to see if the author has posted anything.</p>
+<p>There are no feeds here yet. Why not add one?</p>
 <?php else: ?>
 <ul>
 <?php foreach($items->result() as $item): ?>

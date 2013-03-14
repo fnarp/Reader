@@ -18,7 +18,7 @@ error_reporting(-1);
 | path to your installation.
 |
 */
-$config['base_url']	= '/Reader/';
+$config['base_url']	= '/';
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +30,7 @@ $config['base_url']	= '/Reader/';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.php';
+$config['index_page'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -228,7 +228,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = 'NirceJM<>iP%j?*4[sq-9[D/(`BecMLzjs[(]K_623l0q;NFV-zj4]Yy{?GFMuL';
 
 /*
 |--------------------------------------------------------------------------
