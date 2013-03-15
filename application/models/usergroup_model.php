@@ -2,6 +2,7 @@
 class UserGroup_model extends CI_Model{
 	public function __construct(){
 		$this->load->database();
+		$this->load->model('userfeeditem_model');
 	}
 	
 	public function add($title,$public=false){
@@ -23,8 +24,7 @@ class UserGroup_model extends CI_Model{
 	}
 	
 	public function get_items($groupid){
-		$check = $this->db->get_where('userfeeds',array('userid'=>userid(),'id'=>$groupid));
-		return $check;
+		return $this->userfeeditem_model->get_for_group($groupid);
 	}
 	
 	public function get_grouplist(){
@@ -57,11 +57,25 @@ class UserGroup_model extends CI_Model{
 		return false;
 	}
 	
-	public function get_feeds(){
-		$this->db->select('usergroups.title as grouptitle,usergroups.id as groupid,userfeeds.id as feedid,feeds.title as feedtitle,feeds.uri');
+	
+	public function get_all_feeds(){
+		// FIXME: This is not quite right.
+		// Need to enforce user checking on userfeed_items. It's also
+		// turning up some odd numbers on some feeds.
+		$this->db->select('usergroups.title as grouptitle,
+		usergroups.id as groupid,
+		userfeeds.id as feedid,
+		feeds.title as feedtitle,
+		feeds.uri,
+		count(seen) as articlesseen,
+		count(feeds.title) as articles,
+		(count(feeds.title)-count(seen)) as unread');
 		$this->db->from('userfeeds');
 		$this->db->join('usergroups','userfeeds.groupid = usergroups.id');
 		$this->db->join('feeds','feeds.id = userfeeds.feedid');
+		$this->db->join('feed_items','feed_items.feedid = feeds.id','left outer');
+		$this->db->join('userfeed_items','userfeed_items.feeditemid = feed_items.id','left outer');
+		$this->db->group_by('feeds.title');
 		$this->db->where(array(
 			'usergroups.userid' => userid(),
 			'userfeeds.userid' => userid()

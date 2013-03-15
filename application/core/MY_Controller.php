@@ -147,7 +147,7 @@ class Reader extends Application {
 		$this->load->view('templates/header', $data);
 		
 		$sidebar = array();
-		$sidebar["feeds"] = $this->usergroup_model->get_feeds();
+		$sidebar["feeds"] = $this->usergroup_model->get_all_feeds();
 		$this->load->view('templates/sidebar', $sidebar);
 		$this->load->view($view, $data);
 		$this->load->view('templates/footer', $data);

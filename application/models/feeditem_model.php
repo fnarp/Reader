@@ -5,9 +5,20 @@ class FeedItem_model extends CI_Model{
 	}
 	
 	public function add($data){
-		$this->db->delete('feed_items',array('uid'=>$data['uid']));
-		$this->db->insert('feed_items',$data);
-		return $this->db->insert_id();
+		$check = $this->get_by_uid($data['uid']);
+		$check = $check->result();
+		if(count($check) > 0){
+			$this->db->where(array('id'=>$check[0]->id));
+			$this->db->update('feed_items',$data);
+			return $check[0]->id;
+		} else {
+			$this->db->insert('feed_items',$data);
+			return $this->db->insert_id();
+		}
+	}
+	
+	public function get_by_uid($uid){
+		return $this->db->get_where('feed_items',array('uid' => $uid));
 	}
 	
 	public function add_multiple($datas){
@@ -18,14 +29,6 @@ class FeedItem_model extends CI_Model{
 		}
 		
 		$this->db->trans_complete();
-	}
-	
-	public function get_for($id){
-		if(!$id){
-			return false;
-		}
-		$results = $this->db->get_where('feed_items',array('parent'=>$id));
-		return $results;
 	}
 	
 	

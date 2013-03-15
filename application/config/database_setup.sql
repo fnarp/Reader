@@ -13,7 +13,7 @@ CREATE TABLE feed_items (
 
 CREATE TABLE feed_items (
 	id int(11) NOT NULL AUTO_INCREMENT,
-	parent int(11) NOT NULL,
+	feedid int(11) NOT NULL,
 	uid text NOT NULL,
 	title text NOT NULL,
 	link text NOT NULL,
@@ -35,6 +35,14 @@ CREATE TABLE feed_items (
 	skipDays text,
 	PRIMARY KEY (id)
 );
+
+CREATE TABLE userfeed_items (
+	id int(11) NOT NULL AUTO_INCREMENT,
+	feeditemid int(11) NOT NULL,
+	read boolean,
+	favourite boolean,
+	readlater boolean
+)
 
 CREATE TABLE feeds (
 	id int(11) NOT NULL AUTO_INCREMENT,
@@ -63,6 +71,19 @@ CREATE TABLE usergroups (
 	userid int(11) NOT NULL,
 	title text NOT NULL,
 	uipos int(11),
-	public boolean,
-	KEY id (id)
+	public boolean
+	PRIMARY KEY id (id),
+	KEY userid (userid)
 );
+
+CREATE TABLE userfeed_items (
+	id int(11) NOT NULL AUTO_INCREMENT,
+	userid int(11) NOT NULL,
+	feeditemid int(11) NOT NULL,
+	seen boolean,
+	favourite boolean,
+	readlater boolean,
+	PRIMARY KEY id (id),
+	KEY userid (userid),
+	KEY feeditemid (feeditemid)
+)

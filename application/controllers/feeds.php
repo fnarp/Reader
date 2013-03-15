@@ -60,7 +60,7 @@ class Feeds extends Reader {
 		}
 		
 		$data['title'] = $data['feed']->title;
-		$data['items'] = $this->userfeed_model->get_items($id);
+		$data['items'] = $this->userfeeditem_model->get_for_feed($id);
 		$this->fin('pages/feed',$data);
 	}
 }

@@ -3,7 +3,7 @@ class Userfeed_model extends CI_Model{
 	public function __construct(){
 		$this->load->database();
 		$this->load->model('feed_model');
-		$this->load->model('feeditem_model');
+		$this->load->model('userfeeditem_model');
 		$this->load->library('SimplePie_Autoloader');
 	}
 	
@@ -50,7 +50,7 @@ class Userfeed_model extends CI_Model{
 	}
 	
 	public function get_items($id){
-		return $this->feed_model->get_items($this->get_global_id($id));
+		return $this->userfeeditem_model->get_for($this->get_global_id($id));
 	}
 	
 	public function get_feeds(){

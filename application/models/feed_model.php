@@ -59,20 +59,18 @@ class Feed_model extends CI_Model{
 		$items = $feed->get_items();
 		$data = array();
 		foreach($items as $item){
+			$title = $item->get_title();
 			$data[] = array(
-				'parent' => $feedSpec->id,
-				'title' => $item->get_title(),
+				'feedid' => $feedSpec->id,
+				'title' => $title ? $title : 'No Title',
 				'uid' => $item->get_id(),
 				'link' => $item->get_permalink(),
 				'description' => $item->get_content(),
+				'pubDate' => strtotime($item->get_date())
 			);
 		}
 		
 		return $this->feeditem_model->add_multiple($data);
-	}
-	
-	public function get_items($id){
-		return $this->feeditem_model->get_for($id);
 	}
 	
 	public function get_feeds(){

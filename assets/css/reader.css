@@ -2,7 +2,6 @@
 
 	body{
 		padding-top:40px;
-		padding-left:22.92817679558011%;
 	}
 
 	.sidebar{
@@ -11,7 +10,90 @@
 		top:40px;
 		bottom:0;
 		left:0;
+		
+		background:rgb(250, 250, 250);
+		border-right:1px solid #d4d4d4;
+	}
+	
+	.sidebar .scroller{
+		position:absolute;
+		left:0;
+		right:0;
+		bottom:0;
+		top:60px;
 		overflow:auto;
+		border-top:1px solid #d4d4d4;
+		padding-top:15px;
+	}
+	
+	.sidebar .btn-group{
+		margin:15px;
+	}
+	
+	.main-content{
+		width:auto !important;
+		max-width:60em;
+		margin-left:24% !important;
 	}
 
+}
+
+.semantic,
+.semantic li{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+
+.main-content .content{
+	padding-left:21px;
+	margin-bottom:2em;
+}
+
+.f{
+	display:inline-block;
+	width:16px;
+	height:16px;
+	background:url("/assets/img/feed.png");
+	background-size:100%;
+	background-color:rgb(228, 246, 255); /* I dunno, this is possible */
+}
+
+.sidebar .nav-list a:hover .f{
+	background-color:#0088cc;
+}
+
+.nav .icon{
+	font-weight:bold;
+	color:#d4d4d4 !important;
+	text-shadow:0 -1px 0 rgba(0,0,0,.3),0 1px 0 rgba(255,255,255,.8) !important;
+	font-size:1.5em;
+	border-top:1px solid rgba(0,0,0,0);
+}
+
+.nav .icon.true{
+	text-shadow:0 1px 0 rgba(0,0,0,.33),0 -1px 0 rgba(255,255,255,.8) !important;
+	color:rgb(176, 223, 255) !important;
+	border-top:none;
+	border-bottom:1px solid rgba(0,0,0,0)
+}
+
+.nav .icon:hover,
+.nav .icon:focus,
+.nav .icon:active{
+	color:#0088cc !important;
+}
+
+
+@-webkit-keyframes pending /* Safari and Chrome */
+{
+from {opacity:1;}
+to {opacity:.5;}
+}
+
+.nav .icon.pending{
+	-moz-animation:pending .5s;
+	-webkit-animation:pending .5s;
+	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-direction: alternate;
 }
