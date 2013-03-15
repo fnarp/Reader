@@ -7,25 +7,6 @@ class Userfeed_model extends CI_Model{
 		$this->load->library('SimplePie_Autoloader');
 	}
 	
-	public function setup(){
-		$db = "
-CREATE TABLE userfeeds (
-	id int(11) NOT NULL AUTO_INCREMENT,
-	userid int(11) NOT NULL,
-	feedid int(11) NOT NULL,
-	groupid int(11),
-	uipos int(11),
-	PRIMARY KEY (id),
-	KEY userid (userid)
-);
-";
-
-		$this->db->query($db);
-		
-		return true;
-		
-	}
-	
 	public function add($uri,$groupid,$updateToo=true){
 		$result = $this->feed_model->add($uri,$updateToo);
 		

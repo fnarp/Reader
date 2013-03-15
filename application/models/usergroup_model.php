@@ -4,29 +4,11 @@ class UserGroup_model extends CI_Model{
 		$this->load->database();
 	}
 	
-	public function setup(){
-		$db = "
-CREATE TABLE usergroups (
-	id int(11) NOT NULL AUTO_INCREMENT,
-	user int(11) NOT NULL,
-	title text NOT NULL,
-	uipos int(11),
-	public boolean,
-	KEY id (id)
-);
-";
-
-		$this->db->query($db);
-		
-		return true;
-		
-	}
-	
 	public function add($title,$public=false){
 		$this->db->insert('usergroups',array(
 			'title' => $title,
 			'public' => $public ? true : false,
-			'user' => userid()
+			'userid' => userid()
 		));
 		return $this->db->insert_id();
 	}
@@ -41,12 +23,12 @@ CREATE TABLE usergroups (
 	}
 	
 	public function get_items($groupid){
-		$check = $this->db->get_where('userfeeds',array('user'=>userid(),'id'=>$groupid));
+		$check = $this->db->get_where('userfeeds',array('userid'=>userid(),'id'=>$groupid));
 		return $check;
 	}
 	
 	public function get_grouplist(){
-		$check = $this->db->get_where('usergroups',array('user'=>userid()));
+		$check = $this->db->get_where('usergroups',array('userid'=>userid()));
 		$check = $check->result();
 		
 		$grouplist = array();
@@ -81,7 +63,7 @@ CREATE TABLE usergroups (
 		$this->db->join('usergroups','userfeeds.groupid = usergroups.id');
 		$this->db->join('feeds','feeds.id = userfeeds.feedid');
 		$this->db->where(array(
-			'usergroups.user' => userid(),
+			'usergroups.userid' => userid(),
 			'userfeeds.userid' => userid()
 		));
 		$this->db->order_by('usergroups.uipos','asc');

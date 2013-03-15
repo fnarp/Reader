@@ -1,0 +1,17 @@
+@media (min-width: 979px) {
+
+	body{
+		padding-top:40px;
+		padding-left:22.92817679558011%;
+	}
+
+	.sidebar{
+		position:fixed;
+		overflow:auto;
+		top:40px;
+		bottom:0;
+		left:0;
+		overflow:auto;
+	}
+
+}

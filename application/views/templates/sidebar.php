@@ -1,5 +1,5 @@
 
-		<div class="span3">
+		<div class="span3 sidebar">
 			
 			<div class="btn-group">
 				<a class="btn" href="<?php echo site_url("feeds/add") ?>">Add Feed</a>
@@ -25,4 +25,4 @@
 			</ul>
 			
 		</div>
-		<div class="span6">
+		<div class="span6 main-content">

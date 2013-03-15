@@ -6,27 +6,6 @@ class Feed_model extends CI_Model{
 		$this->load->library('SimplePie_Autoloader');
 	}
 	
-	public function setup(){
-		$db = "
-CREATE TABLE feeds (
-	id int(11) NOT NULL AUTO_INCREMENT,
-	title text NOT NULL,
-	uri varchar(767) NOT NULL UNIQUE,
-	icon text,
-	description text,
-	last_update int,
-	update_frequency int,
-	PRIMARY KEY (id),
-	KEY last_update (last_update)
-);
-";
-
-		$this->db->query($db);
-		
-		return true;
-		
-	}
-	
 	public function add($uri,$updateToo=true){
 		
 		$feed = $this->load_feed($uri);
@@ -35,7 +14,7 @@ CREATE TABLE feeds (
 		}
 		
 		// Check for duplicates since CI can't.
-		$check = $this->db->get_where('feeds',array('uri'=>$feed->get_permalink()));
+		$check = $this->db->get_where('feeds',array('uri'=>$uri));
 		$check = $check->result();
 		if(count($check) > 0){
 			return $check[0]->id;

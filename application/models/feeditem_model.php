@@ -4,28 +4,6 @@ class FeedItem_model extends CI_Model{
 		$this->load->database();
 	}
 	
-	public function setup(){
-		$db = "
-CREATE TABLE feed_items (
-	id int(11) NOT NULL AUTO_INCREMENT,
-	parent int(11) NOT NULL,
-	uid text NOT NULL,
-	title text NOT NULL,
-	link text NOT NULL,
-	content text,
-	pubDate text,
-	image text,
-	PRIMARY KEY (id),
-	KEY uid (uid)
-);
-";
-
-		$this->db->query($db);
-		
-		return true;
-		
-	}
-	
 	public function add($data){
 		$this->db->delete('feed_items',array('uid'=>$data['uid']));
 		$this->db->insert('feed_items',$data);

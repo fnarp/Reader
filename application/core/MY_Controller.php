@@ -138,7 +138,8 @@ class Reader extends Application {
 		if(logged_in() !== TRUE){
 			redirect('login','refresh');
 		}
-		$this->load->model('usergroup_model');
+		$this->load->helper('form');
+		$this->load->helper('url');
 	}
 	
 	

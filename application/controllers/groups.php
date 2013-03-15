@@ -1,17 +1,12 @@
 <?php
 
 
-class Groups extends ReaderController {
+class Groups extends Reader {
 	
 	public function __construct(){
 		parent::__construct();
-		if(logged_in() !== TRUE){
-			redirect('login','refresh');
-		}
 		$this->load->model('usergroup_model');
 		$this->load->model('userfeed_model');
-		$this->load->helper('form');
-		$this->load->helper('url');
 	}
 	
 	public function index(){
@@ -51,15 +46,5 @@ class Groups extends ReaderController {
 		$data['title'] = $data['usergroup']->title;
 		$data['items'] = $this->usergroup_model->get_items($id);
 		$this->fin('pages/group',$data);
-	}
-	
-	private function fin($view,$data){
-		$this->load->view('templates/header', $data);
-		
-		$sidebar = array();
-		$sidebar["feeds"] = $this->userfeed_model->get_feeds();
-		$this->load->view('templates/sidebar', $sidebar);
-		$this->load->view($view, $data);
-		$this->load->view('templates/footer', $data);
 	}
 }

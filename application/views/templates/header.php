@@ -10,13 +10,15 @@
     <!-- Le styles -->
     <link href="/assets/css/bootstrap.css" rel="stylesheet">
     <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/assets/css/reader.css" rel="stylesheet">
 
 	<script type="text/javascript" src="/assets/js/jquery-2.0.0b2.js"></script>
 	<script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/reader.js"></script>
 	
   </head>
 
-  <body style="padding-top:80px;">
+  <body>
 
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
