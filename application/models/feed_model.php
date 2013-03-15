@@ -43,9 +43,11 @@ CREATE TABLE feeds (
 		
 		$data = array(
 			'title' => $feed->get_title(),
-			'uri' => $feed->get_permalink(),
+			'uri' => $uri,
 			'description' => $feed->get_description()
 		);
+		
+		print_r($data);
 		
 		try{
 			$this->db->insert('feeds',$data);

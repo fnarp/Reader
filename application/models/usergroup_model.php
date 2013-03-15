@@ -56,6 +56,25 @@ CREATE TABLE usergroups (
 		return $grouplist;
 	}
 	
+	/**
+	 * Get the ID of a Group from the title.
+	 */
+	public function get_group_id($title,$create=false){
+		$group = $this->db->get_where('usergroups',array(
+			'user' => userid(),
+			'title' => $title
+		));
+		$group = $group->result();
+		if(count($group) > 0){
+			return $group[0]->id;
+		}
+		
+		if($create){
+			return $this->add($title);
+		}
+		return false;
+	}
+	
 	public function get_feeds(){
 		$this->db->select('usergroups.title as grouptitle,usergroups.id as groupid,userfeeds.id as feedid,feeds.title as feedtitle,feeds.uri');
 		$this->db->from('userfeeds');

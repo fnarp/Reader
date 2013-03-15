@@ -26,7 +26,6 @@ class Import extends Reader {
 
 		if ( ! $this->upload->do_upload())
 		{
-			print_r($this->upload->data());
 			$error = array(
 				'error' => $this->upload->display_errors(),
 				'title' => 'Import Failed'
@@ -40,6 +39,8 @@ class Import extends Reader {
 				'upload_data' => $this->upload->data(),
 				'title' => 'Import Success'
 			);
+			
+			$this->import_model->import_opml(file_get_contents($data['upload_data']['full_path']));
 			
 			$this->load->view('pages/import-results', $data);
 		}
