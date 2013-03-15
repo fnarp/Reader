@@ -1,7 +1,7 @@
 <?php
 
 
-class Groups extends Application {
+class Groups extends ReaderController {
 	
 	public function __construct(){
 		parent::__construct();

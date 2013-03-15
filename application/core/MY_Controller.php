@@ -131,5 +131,29 @@ class Application extends CI_Controller
 	}
 }
 
+class Reader extends Application {
+	
+	public function __construct(){
+		parent::__construct();
+		if(logged_in() !== TRUE){
+			redirect('login','refresh');
+		}
+		$this->load->model('usergroup_model');
+	}
+	
+	
+	protected function fin($view,$data){
+		$this->load->view('templates/header', $data);
+		
+		$sidebar = array();
+		$sidebar["feeds"] = $this->usergroup_model->get_feeds();
+		$this->load->view('templates/sidebar', $sidebar);
+		$this->load->view($view, $data);
+		$this->load->view('templates/footer', $data);
+	}
+}
+
+
+
 /* End of file: MY_Controller.php */
 /* Location: application/core/MY_Controller.php */

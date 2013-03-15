@@ -10,6 +10,7 @@ CREATE TABLE usergroups (
 	id int(11) NOT NULL AUTO_INCREMENT,
 	user int(11) NOT NULL,
 	title text NOT NULL,
+	uipos int(11),
 	public boolean,
 	KEY id (id)
 );
@@ -53,5 +54,22 @@ CREATE TABLE usergroups (
 			$grouplist["{$result->id}"] = $result -> title;
 		}
 		return $grouplist;
+	}
+	
+	public function get_feeds(){
+		$this->db->select('usergroups.title as grouptitle,usergroups.id as groupid,userfeeds.id as feedid,feeds.title as feedtitle,feeds.uri');
+		$this->db->from('userfeeds');
+		$this->db->join('usergroups','userfeeds.groupid = usergroups.id');
+		$this->db->join('feeds','feeds.id = userfeeds.feedid');
+		$this->db->where(array(
+			'usergroups.user' => userid(),
+			'userfeeds.userid' => userid()
+		));
+		$this->db->order_by('usergroups.uipos','asc');
+		$this->db->order_by('userfeeds.uipos','asc');
+		
+		$result = $this->db->get();
+		return $result;
+		
 	}
 }

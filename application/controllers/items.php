@@ -1,6 +1,6 @@
 <?php
 
-class Items extends CI_Controller {
+class Items extends ReaderController {
 	
 	public function __construct(){
 		parent::__construct();

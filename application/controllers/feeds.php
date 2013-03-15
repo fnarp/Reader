@@ -1,6 +1,6 @@
 <?php
 
-class Feeds extends Application {
+class Feeds extends Reader {
 	
 	public function __construct(){
 		parent::__construct();
@@ -33,12 +33,12 @@ class Feeds extends Application {
 			$this->fin('add/feed',$data);
 			return;
 		}
-		$success = $this->userfeed_model->add($this->input->post('uri'));
+		$success = $this->userfeed_model->add($this->input->post('uri'),$this->input->post('group'));
 		
 		if($success){
 			redirect('feeds/view/'.$success);
 		} else {
-			$this->fin('add/step1',$data);
+			$this->fin('add/feed',$data);
 		}
 
 	}
@@ -62,15 +62,5 @@ class Feeds extends Application {
 		$data['title'] = $data['feed']->title;
 		$data['items'] = $this->userfeed_model->get_items($id);
 		$this->fin('pages/feed',$data);
-	}
-	
-	private function fin($view,$data){
-		$this->load->view('templates/header', $data);
-		
-		$sidebar = array();
-		$sidebar["feeds"] = $this->userfeed_model->get_feeds();
-		$this->load->view('templates/sidebar', $sidebar);
-		$this->load->view($view, $data);
-		$this->load->view('templates/footer', $data);
 	}
 }

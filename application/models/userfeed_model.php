@@ -26,7 +26,7 @@ CREATE TABLE userfeeds (
 		
 	}
 	
-	public function add($uri,$updateToo=true){
+	public function add($uri,$groupid,$updateToo=true){
 		$result = $this->feed_model->add($uri,$updateToo);
 		
 		if(!$result){
@@ -41,12 +41,13 @@ CREATE TABLE userfeeds (
 		
 		$data = array(
 			'feedid' => $result,
-			'userid' => userid()
+			'userid' => userid(),
+			'groupid' => $groupid
 		);
 		
 		$id = $this->db->insert('userfeeds',$data);
 		
-		return $id;
+		return $this->db->insert_id();
 	}
 	
 	public function get_global_id($myId){
