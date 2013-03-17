@@ -50,17 +50,43 @@
 	margin-bottom:2em;
 }
 
-.f{
-	display:inline-block;
-	width:16px;
-	height:16px;
-	background:url("/assets/img/feed.png");
-	background-size:100%;
-	background-color:rgb(228, 246, 255); /* I dunno, this is possible */
+.sidebar .nav-list .nav-header a{
+	padding-left:16px;
+}
+.sidebar .nav-list a{
+	position:relative;
+	padding-left:45px;
+	color:#777777;
+}
+.sidebar .nav-list .unread a{
+	font-weight:bold;
+	color:#0088cc;
 }
 
-.sidebar .nav-list a:hover .f{
-	background-color:#0088cc;
+.sidebar .nav-list .unread .count{
+	font-weight:normal;
+	color:#777777;
+}
+.sidebar .nav-list .unread .count:before{
+	content:"(";
+}
+.sidebar .nav-list .unread .count:after{
+	content:")";
+}
+
+
+.f{
+	display:block;
+	position:absolute;
+	left:16px;
+	top:2px;
+	width:18px;
+	height:18px;
+	background:white no-repeat center url("/assets/img/feed.png");
+	background-size:16px;
+	padding:1px;
+	border:1px solid #d4d4d4;
+	border-radius:2px;
 }
 
 .nav .icon{
@@ -96,4 +122,24 @@ to {opacity:.5;}
 	-webkit-animation:pending .5s;
 	-webkit-animation-iteration-count:infinite;
 	-webkit-animation-direction: alternate;
+}
+
+.feed-bar{
+	margin-top:15px;
+}
+
+.feed-title h1{
+	padding-left:30px;
+}
+
+.feed-meta{
+	padding-top:15px;
+}
+
+.feed-icon{
+	background:rgb(176, 223, 255);
+	width:57px;
+	height:57px;
+	border-radius:2px;
+	margin-right:5px;
 }

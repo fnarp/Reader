@@ -13,14 +13,14 @@
 						foreach($feeds->result() as $feed):
 						if($grouptitle != $feed->grouptitle): ?>
 						<li class="nav-header">
-							<a href="<?php echo site_url("groups/view/".$feed->groupid) ?>"><?php echo $feed->grouptitle ?></a>
+							<a class="lv" href="<?php echo site_url("groups/view/".$feed->groupid) ?>"><?php echo $feed->grouptitle ?></a>
 						</li>
 						<?php endif; ?>
-						<li id="f<?php echo $feed->feedid ?>">
-							<a href="<?php echo site_url("feeds/view/".$feed->feedid) ?>">
+						<li id="f<?php echo $feed->feedid ?>" class="<?php echo $feed->articles > 0 && $feed->unread > 0 ? 'unread' : 'read' ?>">
+							<a class="lv" href="<?php echo site_url("feeds/view/".$feed->feedid) ?>">
 								<span class="f"></span>
 								<?php echo $feed->feedtitle ?>
-								<?php if($feed->articles > 0 && $feed->unread > 0) echo "({$feed->unread})"?>
+								<?php if($feed->articles > 0 && $feed->unread > 0) echo '<span class="count">'.$feed->unread.'</span>'; ?>
 							</a>
 						</li>
 						<?php

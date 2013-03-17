@@ -70,6 +70,8 @@ class Feed_model extends CI_Model{
 			);
 		}
 		
+		$this->update_favicon($id);
+		
 		return $this->feeditem_model->add_multiple($data);
 	}
 	
@@ -84,5 +86,89 @@ class Feed_model extends CI_Model{
 		$feed->enable_cache(false);
 		$feed->init();
 		return $feed;
+	}
+	
+	public function unrelative_url($root,$relative){
+		if(!$relative){
+			return '';
+		}
+		
+		if(preg_match("/^https?:\/\//",$relative) == 0){
+			return "$root/$relative";
+		}
+		return $relative;
+	}
+	
+	/**
+	 * Grab the favicon and touch icon from the feed homepage and store the
+	 * link.
+	 */
+	public function update_favicon($feedid){
+		$this->load->library('simple_html_dom');
+		
+		$feed = $this->get($feedid);
+		if(!$feed){
+			return false;
+		}
+		
+		$feedcontents = $this->load_feed($feed->uri);
+		$uri = $feedcontents->get_link();
+		
+		if(!$uri){
+			return false;
+		}
+		$html = file_get_html($uri);
+		
+		$favicon = false;
+		$touchicon = false;
+		
+		foreach($html->find('link') as $link){
+			if($link->rel == 'apple-touch-icon' || $link->rel == 'apple-touch-icon-precomposed'){
+				$touchicon = $link->href;
+			} else if ($link->rel == 'shortcut icon' || $link->rel == 'icon'){
+				$favicon = $link->href;
+			}
+		}
+		
+		$data = array(
+			'favicon' => $this->cache_image($this->unrelative_url($uri,$favicon),$feedid,'favicons'),
+			'touchicon' => $this->cache_image($this->unrelative_url($uri,$touchicon),$feedid,'touchicons')
+		);
+		
+		
+		
+		
+		
+		$this->db->where('id',$feedid);
+		$this->db->update('feeds',$data);
+		
+	}
+	
+	public function cache_image($uri,$id,$namespace){
+		$ch = curl_init($uri);
+		curl_setopt_array($ch,array(
+			CURLOPT_BINARYTRANSFER => true,
+			CURLOPT_RETURNTRANSFER => true
+		));
+		
+		$img = curl_exec($ch);
+		$type = curl_getinfo($ch,CURLINFO_CONTENT_TYPE);
+		
+		$allowed_types = array(
+			'image/jpeg' => 'jpg',
+			'image/png' => 'jpg',
+			'image/vnd.microsoft.icon' => 'ico',
+			'image/gif' => 'gif',
+		);
+		
+		if(!isset($allowed_types[$type])){
+			return false;
+		}
+		
+		$filename = "usercontent/$namespace/$id.".$allowed_types[$type];
+		file_put_contents($filename,$img);
+		
+		return "$filename";
+		
 	}
 }

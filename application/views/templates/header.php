@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Reader</title>
+    <title>Prereader</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -22,7 +22,7 @@
 
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
-    <a class="brand" href="/feeds" style="margin:0">Reader</a>
+    <a class="brand" href="/feeds" style="margin:0">Prereader</a>
     <div class="pull-right">
 		<ul class="nav">
 		  <li class="dropdown">

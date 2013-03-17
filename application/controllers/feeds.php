@@ -49,11 +49,14 @@ class Feeds extends Reader {
 			show_404();
 		}
 		
-		$this->userfeed_model->update($id);
+		// automatically update the feed on load. Don't do this, it's 
+		// inefficient.
+		//~ $this->userfeed_model->update($id);
 		
 		$data = Array();
 		
 		$data['feed'] = $this->userfeed_model->get($id);
+		$data['feedid'] = $id;
 		
 		if(!$data['feed']){
 			show_404();
@@ -62,5 +65,21 @@ class Feeds extends Reader {
 		$data['title'] = $data['feed']->title;
 		$data['items'] = $this->userfeeditem_model->get_for_feed($id);
 		$this->fin('pages/feed',$data);
+	}
+	
+	public function update($id){
+		if ( !$id )
+		{
+			show_404();
+		}
+		
+		$this->userfeed_model->update($id);
+		
+		redirect('feeds/view/'.(int)$id);
+	}
+	
+	public function markread($id){
+		$this->userfeed_model->markread($id);
+		redirect('feeds/view/'.(int)$id);
 	}
 }

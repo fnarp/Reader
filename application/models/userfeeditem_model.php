@@ -52,15 +52,23 @@ class UserFeedItem_model extends CI_Model{
 	}
 	
 	public function get_where($where){
+		$userid = userid();
 		
 		$this->db->select('*,feed_items.id as feeditemid');
-		$this->db->from('feed_items');
-		$this->db->join('userfeed_items','userfeed_items.feeditemid = feed_items.id','left outer');
+		$this->db->from("feed_items");
 		$this->db->join('userfeeds','userfeeds.feedid = feed_items.feedid');
+		$this->db->join('userfeed_items','userfeed_items.feeditemid = feed_items.id','left outer');
 		
 		$this->db->where($where);
+		$this->db->where('(userfeed_items.userid is null || userfeed_items.userid = '.$userid.')');
 		
-		return $this->db->get();
+		$this->db->order_by('pubDate','desc');
+		$this->db->limit(50);
+		
+		
+		$result = $this->db->get();
+
+		return $result;
 	}
 	
 }

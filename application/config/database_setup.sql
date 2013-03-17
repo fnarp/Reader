@@ -22,7 +22,7 @@ CREATE TABLE feed_items (
 	copyright text,
 	managingEditor text,
 	webMaster text,
-	pubDate text,
+	pubDate int(11),
 	lastBuildDate text,
 	category text,
 	generator text,
@@ -33,7 +33,9 @@ CREATE TABLE feed_items (
 	textInput text,
 	skipHours text,
 	skipDays text,
-	PRIMARY KEY (id)
+	PRIMARY KEY (id),
+	KEY pubDate (pubDate),
+	KEY feedid (feedid),
 );
 
 CREATE TABLE userfeed_items (
@@ -48,7 +50,8 @@ CREATE TABLE feeds (
 	id int(11) NOT NULL AUTO_INCREMENT,
 	title text NOT NULL,
 	uri varchar(767) NOT NULL UNIQUE,
-	icon text,
+	favicon text,
+	touchicon text,
 	description text,
 	last_update int,
 	update_frequency int,

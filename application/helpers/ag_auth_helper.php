@@ -25,7 +25,7 @@ function userid()
 		$CI =& get_instance();
 		$user = $CI->ag_auth->get_user($CI->session->userdata('username'));
 	}
-	return $user['id'];
+	return isset($user['id']) && $user['id'] ? $user['id'] : -1;
 }
 
 function useremail()

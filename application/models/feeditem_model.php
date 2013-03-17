@@ -7,6 +7,9 @@ class FeedItem_model extends CI_Model{
 	public function add($data){
 		$check = $this->get_by_uid($data['uid']);
 		$check = $check->result();
+		if(!$data['link'] || !$data['title'] || !$data['uid']){
+			return false;
+		}
 		if(count($check) > 0){
 			$this->db->where(array('id'=>$check[0]->id));
 			$this->db->update('feed_items',$data);

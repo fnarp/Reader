@@ -58,10 +58,11 @@ class UserGroup_model extends CI_Model{
 	}
 	
 	
+	/**
+	 * Get all feeds, including read count. For use in the sidebar.
+	 */
 	public function get_all_feeds(){
-		// FIXME: This is not quite right.
-		// Need to enforce user checking on userfeed_items. It's also
-		// turning up some odd numbers on some feeds.
+		$userid = userid();
 		$this->db->select('usergroups.title as grouptitle,
 		usergroups.id as groupid,
 		userfeeds.id as feedid,
@@ -69,22 +70,24 @@ class UserGroup_model extends CI_Model{
 		feeds.uri,
 		count(seen) as articlesseen,
 		count(feeds.title) as articles,
-		(count(feeds.title)-count(seen)) as unread');
+		(count(feed_items.title)-count(seen)) as unread');
 		$this->db->from('userfeeds');
 		$this->db->join('usergroups','userfeeds.groupid = usergroups.id');
 		$this->db->join('feeds','feeds.id = userfeeds.feedid');
 		$this->db->join('feed_items','feed_items.feedid = feeds.id','left outer');
 		$this->db->join('userfeed_items','userfeed_items.feeditemid = feed_items.id','left outer');
 		$this->db->group_by('feeds.title');
+		$this->db->where('(userfeed_items.userid is null || userfeed_items.userid = '.userid().')');
 		$this->db->where(array(
-			'usergroups.userid' => userid(),
-			'userfeeds.userid' => userid()
+			'usergroups.userid' => $userid,
+			'userfeeds.userid' => $userid
 		));
 		$this->db->order_by('usergroups.uipos','asc');
+		$this->db->order_by('usergroups.title','asc');
 		$this->db->order_by('userfeeds.uipos','asc');
+		$this->db->order_by('feeds.title','asc');
 		
-		$result = $this->db->get();
-		return $result;
+		return $this->db->get();
 		
 	}
 }

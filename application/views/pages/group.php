@@ -3,16 +3,9 @@
 <?php if(count($items->result()) == 0): ?>
 <p>There are no feeds here yet. Why not add one?</p>
 <?php else: ?>
-<ul>
+<ul class="semantic">
 <?php foreach($items->result() as $item): ?>
-	<li>
-		<div class="title">
-			<h2><a href="<?php echo $item->link ?>"><?php echo $item->title ?></a></h2>
-		</div>
-		<div class="content">
-			<?php echo $item->description ?>
-		</div>
-	</li>
+	<?php $this->load->view('templates/feed_item',array('item' => $item)); ?>
 <?php endforeach; ?>
 </ul>
 <?php endif; ?>

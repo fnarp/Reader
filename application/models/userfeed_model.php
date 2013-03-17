@@ -15,7 +15,7 @@ class Userfeed_model extends CI_Model{
 		}
 		
 		// Check for duplicates
-		$check = $this->db->get_where('userfeeds',array('feedid'=>$result));
+		$check = $this->db->get_where('userfeeds',array('feedid'=>$result,'userid'=>userid()));
 		if(count($check->result()) > 0){
 			return $result;
 		}
@@ -51,6 +51,20 @@ class Userfeed_model extends CI_Model{
 	
 	public function get_items($id){
 		return $this->userfeeditem_model->get_for($this->get_global_id($id));
+	}
+	
+	public function markread($feedid){
+		$this->db->select('feed_items.id as id');
+		$this->db->from('feed_items');
+		$this->db->join('userfeeds','userfeeds.feedid = feed_items.feedid');
+		$this->db->where('userfeeds.id',$feedid);
+		$items = $this->db->get();
+		
+		$items = $items->result();
+		foreach($items as $item){
+			$this->userfeeditem_model->read($item->id);
+		}
+		
 	}
 	
 	public function get_feeds(){
