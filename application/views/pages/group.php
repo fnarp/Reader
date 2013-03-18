@@ -1,7 +1,7 @@
-<h1><?php echo $usergroup->title ?></h1>
+<h1><?php echo html_escape($usergroup->title) ?></h1>
 
 <?php if(count($items->result()) == 0): ?>
-<p>There are no feeds here yet. Why not add one?</p>
+<p>There are no feeds here yet. Why not <a href="<?php echo site_url("feeds/add") ?>">add one</a>?</p>
 <?php else: ?>
 <ul class="semantic">
 <?php foreach($items->result() as $item): ?>

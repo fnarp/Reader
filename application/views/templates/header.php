@@ -27,7 +27,7 @@
 		<ul class="nav">
 		  <li class="dropdown">
 			<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-				<?php echo htmlentities(username()) ?>
+				<?php echo html_escape(username()) ?>
 				<img src="http://www.gravatar.com/avatar/<?php echo trim(strtolower(md5(useremail()))) ?>?s=40" height="20" width="20" style="border-radius:2px;" alt="" />
 			  <b class="caret"></b>
 			</a>

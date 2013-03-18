@@ -16,7 +16,7 @@
 <p class="lead"><?php echo $feed->description ?></p>
 
 <?php if(count($items->result()) == 0): ?>
-<p>There are no items in this feed. Check the site to see if the author has posted anything.</p>
+<p>There are no items in this feed. Refresh the feed or check the site to see if the author has posted anything.</p>
 <?php else: ?>
 <ul class="semantic">
 <?php foreach($items->result() as $item): ?>

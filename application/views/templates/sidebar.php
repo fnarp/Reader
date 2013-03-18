@@ -13,7 +13,7 @@
 						foreach($feeds->result() as $feed):
 						if($grouptitle != $feed->grouptitle): ?>
 						<li class="nav-header">
-							<a class="lv" href="<?php echo site_url("groups/view/".$feed->groupid) ?>"><?php echo $feed->grouptitle ?></a>
+							<a class="lv" href="<?php echo site_url("groups/view/".$feed->groupid) ?>"><?php echo html_escape($feed->grouptitle) ?></a>
 						</li>
 						<?php endif; ?>
 						<li id="f<?php echo $feed->feedid ?>" class="<?php echo $feed->articles > 0 && $feed->unread > 0 ? 'unread' : 'read' ?>">

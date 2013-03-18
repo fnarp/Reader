@@ -156,7 +156,7 @@ class Feed_model extends CI_Model{
 		
 		$allowed_types = array(
 			'image/jpeg' => 'jpg',
-			'image/png' => 'jpg',
+			'image/png' => 'png',
 			'image/vnd.microsoft.icon' => 'ico',
 			'image/x-icon' => 'ico',
 			'image/gif' => 'gif',
