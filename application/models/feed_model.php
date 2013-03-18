@@ -158,6 +158,7 @@ class Feed_model extends CI_Model{
 			'image/jpeg' => 'jpg',
 			'image/png' => 'jpg',
 			'image/vnd.microsoft.icon' => 'ico',
+			'image/x-icon' => 'ico',
 			'image/gif' => 'gif',
 		);
 		

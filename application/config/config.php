@@ -1,9 +1,5 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-ini_set('display_errors',1);
-ini_set('display_startup_errors',1);
-error_reporting(-1);
-
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -219,16 +215,6 @@ $config['log_date_format'] = 'Y-m-d H:i:s';
 */
 $config['cache_path'] = '';
 
-/*
-|--------------------------------------------------------------------------
-| Encryption Key
-|--------------------------------------------------------------------------
-|
-| If you use the Encryption class or the Session class you
-| MUST set an encryption key.  See the user guide for info.
-|
-*/
-$config['encryption_key'] = 'NirceJM<>iP%j?*4[sq-9[D/(`BecMLzjs[(]K_623l0q;NFV-zj4]Yy{?GFMuL';
 
 /*
 |--------------------------------------------------------------------------
@@ -257,6 +243,17 @@ $config['sess_table_name']		= 'ci_sessions';
 $config['sess_match_ip']		= FALSE;
 $config['sess_match_useragent']	= TRUE;
 $config['sess_time_to_update']	= 300;
+
+/*
+|--------------------------------------------------------------------------
+| Encryption Key
+|--------------------------------------------------------------------------
+|
+| If you use the Encryption class or the Session class you
+| MUST set an encryption key.  See the user guide for info.
+|
+*/
+$config['encryption_key'] = 'NirceJM<>iP%j?*4[sq-9[D/(`BecMLzjs[(]K_623l0q;NFV-zj4]Yy{?GFMuL';
 
 /*
 |--------------------------------------------------------------------------
@@ -364,3 +361,4 @@ $config['proxy_ips'] = '';
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */
+

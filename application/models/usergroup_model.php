@@ -68,6 +68,7 @@ class UserGroup_model extends CI_Model{
 		userfeeds.id as feedid,
 		feeds.title as feedtitle,
 		feeds.uri,
+		favicon,
 		count(seen) as articlesseen,
 		count(feeds.title) as articles,
 		(count(feed_items.title)-count(seen)) as unread');

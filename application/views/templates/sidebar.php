@@ -18,7 +18,7 @@
 						<?php endif; ?>
 						<li id="f<?php echo $feed->feedid ?>" class="<?php echo $feed->articles > 0 && $feed->unread > 0 ? 'unread' : 'read' ?>">
 							<a class="lv" href="<?php echo site_url("feeds/view/".$feed->feedid) ?>">
-								<span class="f"></span>
+								<span class="f"<?php if($feed->favicon) echo 'style="background-image:url('.site_url().$feed->favicon.')"' ?>></span>
 								<?php echo $feed->feedtitle ?>
 								<?php if($feed->articles > 0 && $feed->unread > 0) echo '<span class="count">'.$feed->unread.'</span>'; ?>
 							</a>
