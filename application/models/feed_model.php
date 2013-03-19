@@ -139,6 +139,10 @@ class Feed_model extends CI_Model{
 		}
 		$html = file_get_html($uri);
 		
+		if(!$html){
+			return false;
+		}
+		
 		$favicon = false;
 		$touchicon = false;
 		
@@ -165,6 +169,9 @@ class Feed_model extends CI_Model{
 	}
 	
 	public function cache_image($uri,$id,$namespace){
+		if(!$uri){
+			return false;
+		}
 		$ch = curl_init($uri);
 		curl_setopt_array($ch,array(
 			CURLOPT_BINARYTRANSFER => true,
