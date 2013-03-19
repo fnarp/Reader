@@ -82,4 +82,8 @@ class Feeds extends Reader {
 		$this->userfeed_model->markread($id);
 		redirect('feeds/view/'.(int)$id);
 	}
+	
+	public function update_all(){
+		die($this->userfeed_model->update_all());
+	}
 }

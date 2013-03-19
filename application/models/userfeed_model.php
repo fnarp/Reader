@@ -49,6 +49,10 @@ class Userfeed_model extends CI_Model{
 		return $this->feed_model->update($this->get_global_id($id));
 	}
 	
+	public function update_all(){
+		return $this->feed_model->update_all_incremental();
+	}
+	
 	public function get_items($id){
 		return $this->userfeeditem_model->get_for($this->get_global_id($id));
 	}
@@ -74,4 +78,5 @@ class Userfeed_model extends CI_Model{
 		
 		return $this->db->get();
 	}
+	
 }

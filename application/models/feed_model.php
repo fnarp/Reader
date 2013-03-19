@@ -1,5 +1,6 @@
 <?php
 class Feed_model extends CI_Model{
+	private $default_interval = 30; //minutes
 	public function __construct(){
 		$this->load->database();
 		$this->load->model('feeditem_model');
@@ -70,9 +71,28 @@ class Feed_model extends CI_Model{
 			);
 		}
 		
-		$this->update_favicon($id);
+		$this->db->where('id',$id);
+		$this->db->update('feeds',array(
+			'last_update'=>time()
+		));
 		
 		return $this->feeditem_model->add_multiple($data);
+	}
+	
+	public function update_all_incremental($limit=10){
+		$this->db->select('id');
+		$this->db->where('last_update is null || last_update < '.(time() - 60*$this->default_interval));
+		$this->db->order_by('last_update','asc');
+		$this->db->limit((int)$limit);
+		$feeds = $this->db->get('feeds');
+		$results = $feeds->result();
+		
+		foreach($results as $feed){
+			echo $feed->id."<br/>";
+			$this->update($feed->id);
+		}
+		
+		return count($feeds->result()) > 0;
 	}
 	
 	public function get_feeds(){
