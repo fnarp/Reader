@@ -3,6 +3,7 @@ class Userfeed_model extends CI_Model{
 	public function __construct(){
 		$this->load->database();
 		$this->load->model('feed_model');
+		$this->load->model('usergroup_model');
 		$this->load->model('userfeeditem_model');
 		$this->load->library('SimplePie_Autoloader');
 	}
@@ -29,6 +30,14 @@ class Userfeed_model extends CI_Model{
 		$id = $this->db->insert('userfeeds',$data);
 		
 		return $this->db->insert_id();
+	}
+	
+	public function delete($id){
+		$this->db->delete('userfeeds',array(
+			'id'=>$id,
+			'userid' => userid()
+		));
+		return $this->db->affected_rows();
 	}
 	
 	public function get_global_id($myId){
@@ -71,16 +80,26 @@ class Userfeed_model extends CI_Model{
 		
 	}
 	
-	public function get_feeds(){
-		$this->db->select('*');
-		$this->db->from('feeds');
-		$this->db->join('userfeeds','userfeeds.feedid = feeds.id');
+	public function set_group($feedid,$groupid){
+		$group = $this->usergroup_model->get($groupid);
+		if(!$group){
+			return false;
+		}
+		$this->db->where(array(
+			'userid' => userid(),
+			'id' => $feedid
+		));
+		$this->db->update('userfeeds',array(
+			'groupid' => $group->id
+		));
 		
-		return $this->db->get();
+		return $this->db->affected_rows();
 	}
 	
 	public function get_log(){
 		return $this->feed_model->get_log();
 	}
+	
+	
 	
 }

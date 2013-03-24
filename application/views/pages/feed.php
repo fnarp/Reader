@@ -9,6 +9,11 @@
 		<div class="btn-group">
 			<a class="btn lv" href="<?php echo site_url("feeds/update/$feedid") ?>" title="Refresh Feed">&#10227;</a>
 			<a class="btn lv" href="<?php echo site_url("feeds/markread/$feedid") ?>" title="Mark All Read">Mark All Read</a>
+			<a class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+			<ul class="dropdown-menu">
+				<li><a href="<?php echo site_url("feeds/unsubscribe/$feedid") ?>">Unsubscribe</a></li>
+				<li><a href="<?php echo site_url("feeds/move/$feedid") ?>">Move Folder</a></li>
+			</ul>
 		</div>
 	</div>
 </div>

@@ -89,4 +89,43 @@ class Feeds extends Reader {
 		echo $this->userfeed_model->get_log();
 		die('</body></html>');
 	}
+	
+	public function unsubscribe($id){
+		$feed = $this->userfeed_model->get($id);
+		if(!$feed){
+			$this->session->set_flashdata('message', "We couldn't unsubscribe from that feed because it doesn't seem to exist in the database.");
+			redirect('feeds');
+			return;
+		}
+		
+		if($this->userfeed_model->delete($id)){
+			$this->session->set_flashdata('message', "You are now unsubscribed from {$feed->title}.");
+			redirect('feeds');
+			return;
+		} else {
+			$this->session->set_flashdata('message', "We were unable to unsubscribe from that feed because the database may be inconsistent.");
+			redirect('feeds');
+			return;
+		}
+	}
+	
+	public function move($id,$to=false){
+		if($to){
+			if($this->userfeed_model->set_group($id,$to)){
+				$this->session->set_flashdata('message','Your feed has been moved.');
+			} else {
+				$this->session->set_flashdata('message','Your feed could not be moved');
+			}
+			redirect('feeds/view/'.(int)$id);
+			return;
+		}
+		
+		$this->fin('pages/move-feed.php',array(
+			'from'=>$id,
+			'groups' => $this->usergroup_model->get_grouplist(),
+			'feed' => $this->userfeed_model->get($id)
+		));
+		
+		
+	}
 }

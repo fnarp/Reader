@@ -32,3 +32,9 @@
 			
 		</div>
 		<div class="span6 main-content">
+			<?php if($this->session->flashdata('message')): ?>
+			<div class="alert">
+				<a href="#" class="close" data-dismiss="alert">&times;</a>
+				<?php echo htmlentities($this->session->flashdata('message')) ?>
+			</div>
+			<?php endif; ?>

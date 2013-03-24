@@ -15,7 +15,10 @@ class UserGroup_model extends CI_Model{
 	}
 	
 	public function get($id){
-		$check = $this->db->get_where('usergroups',array('id'=>$id));
+		$check = $this->db->get_where('usergroups',array(
+			'id' => $id,
+			'userid' => userid()
+		));
 		$check = $check->result();
 		if(count($check) == 0){
 			return false;
