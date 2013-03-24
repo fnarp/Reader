@@ -1,10 +1,13 @@
 <?php
 class Feed_model extends CI_Model{
 	private $default_interval = 30; //minutes
+	private $log = array();
 	public function __construct(){
+		$this->log_time('start');
 		$this->load->database();
 		$this->load->model('feeditem_model');
 		$this->load->library('SimplePie_Autoloader');
+		$this->log_time('__construct');
 	}
 	
 	public function add($uri,$updateToo=true){
@@ -50,13 +53,39 @@ class Feed_model extends CI_Model{
 		return $feeds[0];
 	}
 	
+	public function log_time($key){
+		$this->log[] = array(
+			'time' => microtime(true),
+			'key' => $key
+		);
+	}
+	
+	public function get_log(){
+		$start = $this->log[0]['time'];
+		$total = microtime(true) - $start;
+		$return = "<p></p>Total execution time: $total ms.</p><table><tr><th>Action</th><th>Time</th><th>Elapsed</th></tr>";
+		$last = $start;
+		foreach($this->log as $entry){
+			$return .= "<tr><td>".$entry['key']."</td><td>".
+				($entry['time']-$last)."</td><td>".
+				($entry['time']-$start)."</td></tr>";
+			$last = $entry['time'];
+		}
+		$return .= "</table>";
+		return($return);
+	}
+	
 	public function update($id){
+		$this->log_time('update(): Start');
 		$feedSpec = $this->get($id);
+		$this->log_time('update(): got feed ID');
 		if(!$feedSpec){
 			return false;
 		}
 	
 		$feed = $this->load_feed($feedSpec->uri);
+		$this->log_time('update(): loaded feed');
+		
 		$items = $feed->get_items();
 		$data = array();
 		foreach($items as $item){
@@ -75,11 +104,13 @@ class Feed_model extends CI_Model{
 		$this->db->update('feeds',array(
 			'last_update'=>time()
 		));
+		$return = $this->feeditem_model->add_multiple($data);
 		
-		return $this->feeditem_model->add_multiple($data);
+		$this->log_time('update(): inserted results.');
+		return $return;
 	}
 	
-	public function update_all_incremental($limit=10){
+	public function update_all_incremental($limit=3){
 		$this->db->select('id');
 		$this->db->where('last_update is null || last_update < '.(time() - 60*$this->default_interval));
 		$this->db->order_by('last_update','asc');

@@ -84,6 +84,9 @@ class Feeds extends Reader {
 	}
 	
 	public function update_all(){
-		die($this->userfeed_model->update_all());
+		echo('<html><body>');
+		echo $this->userfeed_model->update_all();
+		echo $this->userfeed_model->get_log();
+		die('</body></html>');
 	}
 }

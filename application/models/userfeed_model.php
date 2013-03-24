@@ -79,4 +79,8 @@ class Userfeed_model extends CI_Model{
 		return $this->db->get();
 	}
 	
+	public function get_log(){
+		return $this->feed_model->get_log();
+	}
+	
 }
