@@ -2,7 +2,7 @@ $(document).ready(function(){
 	jQuery('body').height(window.innerHeight+'px');
 	
 	/* Ajax toggle buttons. */
-	jQuery('.main-content').on('click','.aj',function(){
+	jQuery('body').on('click','.aj',function(){
 		var that = $(this)
 			.addClass('pending')
 			.removeClass('error');
