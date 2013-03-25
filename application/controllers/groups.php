@@ -69,4 +69,13 @@ class Groups extends Reader {
 		}
 		
 	}
+	
+	public function delete($id){
+		if(!$id) {
+			show_404();
+		}
+		$this->usergroup_model->delete($id);
+		
+		redirect('feeds');
+	}
 }

@@ -29,6 +29,9 @@
 			</label>
 		</div>
 		<div>
+			<a href="<?php echo site_url('/groups/delete/'.$usergroup->id) ?>">Delete Folder</a> and all feeds inside.
+		</div>
+		<div>
 			<?php echo form_submit(array(
 				'id' => 'go',
 				'value' => 'Update folder',

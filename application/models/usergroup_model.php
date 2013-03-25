@@ -14,6 +14,16 @@ class UserGroup_model extends CI_Model{
 		return $this->db->insert_id();
 	}
 	
+	public function delete($id){
+		$usergroup = $this->get($id);
+		if(isset($usergroup->id)){
+			$this->db->delete('usergroups',array(
+				'id' => $id,
+				'userid' => userid()
+			));
+		}
+	}
+	
 	public function get($id){
 		$check = $this->db->get_where('usergroups',array(
 			'id' => $id,
