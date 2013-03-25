@@ -94,4 +94,13 @@ class UserGroup_model extends CI_Model{
 		return $this->db->get();
 		
 	}
+	
+	public function update($id,$data){
+		$this->db->where(array(
+			'id'=>$id,
+			'userid'=>userid()
+		));
+		$this->db->update('usergroups',$data);
+		return $this->db->affected_rows();
+	}
 }

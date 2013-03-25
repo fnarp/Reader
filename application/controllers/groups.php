@@ -30,8 +30,7 @@ class Groups extends Reader {
 	}
 	
 	public function view($id){
-		if ( !$id )
-		{
+		if(!$id) {
 			show_404();
 		}
 		
@@ -46,5 +45,28 @@ class Groups extends Reader {
 		$data['title'] = $data['usergroup']->title;
 		$data['items'] = $this->usergroup_model->get_items($id);
 		$this->fin('pages/group',$data);
+	}
+	
+	public function edit($id){
+		if(!$id) {
+			show_404();
+		}
+		
+		$usergroup = $this->usergroup_model->get($id);
+		
+		if($this->input->post('go')){
+			$this->usergroup_model->update(
+				$usergroup->id,
+				array(
+					'title' => $this->input->post('title'),
+					'public' => $this->input->post('public')
+				)
+			);
+			redirect('groups/view/'.$usergroup->id);
+			return;
+		} else {
+			$this->fin('pages/group-edit',array('usergroup'=>$usergroup));
+		}
+		
 	}
 }
