@@ -24,6 +24,29 @@ $(document).ready(function(){
 		return false;
 	});
 	
+	var pushState = function(state, title, url){
+		if(typeof history.pushState != 'undefined'){
+			history.pushState(state,title,url);
+		} else {
+			// Just a little old browser indifference.
+			// Don't worry about it.
+		}
+	}
+	
+	var showState = function(url,content,modifyHistory){
+		var sidebarpos = $('.sidebar .scroller').scrollTop();
+		var title = $(content).find('title').text();
+		var maincontent = $(content).find('.main-content');
+		$('.main-content').replaceWith(maincontent);
+		$('.sidebar .scroller').replaceWith($(content).find('.sidebar .scroller'));
+		$('.sidebar .scroller').scrollTop(sidebarpos);
+		$('body').scrollTop(0);
+		
+		if(modifyHistory){
+			pushState(content,title,url);
+		}
+	}
+	
 	/**
 	 * LoadView. Load this link via AJAX into the view.
 	 */
@@ -35,13 +58,7 @@ $(document).ready(function(){
 		$.ajax({
 			url : ajaxTarget,
 			success : function(content){
-				var sidebarpos = $('.sidebar .scroller').scrollTop();
-				
-				$('.main-content').replaceWith($(content).find('.main-content'));
-				$('.sidebar .scroller').replaceWith($(content).find('.sidebar .scroller'));
-				$('.sidebar .scroller').scrollTop(sidebarpos);
-				$('body').scrollTop(0);
-				
+				showState(ajaxTarget,content,true);
 				that.removeClass('pending');
 			},
 			error : function(){
@@ -51,9 +68,17 @@ $(document).ready(function(){
 		e.preventDefault();
 	});
 	
+	window.onpopstate = function(e){
+		console.log('state popped');
+		showState(document.location,e.state,false);
+		console.log(e);
+	};
+	
+	
+	
 });
 
 
-jQuery(window).load(function(){
-	
+jQuery(window).resize(function(){
+	jQuery('body').height(window.innerHeight+'px');
 });
