@@ -23,7 +23,7 @@
 <?php if(count($items->result()) == 0): ?>
 <p>There are no items in this feed. Refresh the feed or check the site to see if the author has posted anything.</p>
 <?php else: ?>
-<ul class="semantic">
+<ul class="articles semantic">
 <?php foreach($items->result() as $item): ?>
 	<?php $this->load->view('templates/feed_item',array('item' => $item)); ?>
 <?php endforeach; ?>

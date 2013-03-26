@@ -14,6 +14,7 @@
 
 	<script type="text/javascript" src="/assets/js/jquery-2.0.0b2.js"></script>
 	<script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/mousetrap.min.js"></script>
 	<script type="text/javascript" src="/assets/js/reader.js"></script>
 	
   </head>

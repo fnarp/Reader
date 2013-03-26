@@ -1,4 +1,7 @@
 $(document).ready(function(){
+	
+	var articleCurrent = 0;
+	
 	jQuery('body').height(window.innerHeight+'px');
 	
 	/* Ajax toggle buttons. */
@@ -53,10 +56,35 @@ $(document).ready(function(){
 		$('.main-content').replaceWith(maincontent);
 		$('.sidebar .scroller').replaceWith($(content).find('.sidebar .scroller'));
 		$('.sidebar .scroller').scrollTop(sidebarpos);
+		
+		// Reset our scroll and current article.
 		$('body').scrollTop(0);
+		articleCurrent = 0;
 		
 		if(modifyHistory){
 			pushState(content,title,urn);
+		}
+	}
+
+	var showArticle = function(id){
+		
+		var className = 'current-article';
+		$('.'+className).removeClass(className);
+		var article = $('.articles > li').eq(id).addClass(className);
+		
+		if(id == 0){
+			$('body').scrollTop(0);
+		} else {
+			$('body').scrollTop(article.position().top);
+		}
+		
+		markRead(article);
+	}
+	
+	var markRead = function(ele){
+		var seenEle = $('.seen',ele);
+		if(seenEle.hasClass('false')){
+			seenEle.click();
 		}
 	}
 	
@@ -88,6 +116,29 @@ $(document).ready(function(){
 	window.onpopstate = function(e){
 		showState(document.location,e.state,false);
 	};
+	
+	Mousetrap.bind(['j','k'],function(e,key){
+		
+		markRead($('.articles > li').eq(articleCurrent));
+		
+		
+		if(key == 'j'){
+			articleCurrent++;
+		} else {
+			articleCurrent--;
+		}
+		
+		if(articleCurrent < 0) {
+			articleCurrent = 0;
+		}
+		
+		if(articleCurrent >= $('.articles > li').length) {
+			articleCurrent--;
+		}
+		
+		showArticle(articleCurrent);
+		
+	});
 	
 	
 	

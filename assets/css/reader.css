@@ -168,3 +168,8 @@ to {opacity:.5;}
 	border-radius:2px;
 	margin-right:5px;
 }
+
+
+.articles .current-article .navbar-inner{
+	border-color:#0088cc;
+}
