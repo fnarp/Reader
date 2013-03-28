@@ -1,6 +1,8 @@
 $(document).ready(function(){
 	
 	var articleCurrent = 0;
+	var feedCurrent = 0;
+	var maxRequest = 0;
 	
 	jQuery('body').height(window.innerHeight+'px');
 	
@@ -96,11 +98,17 @@ $(document).ready(function(){
 			.addClass('pending')
 			.removeClass('error');
 		var ajaxTarget = $(this).attr('href');
+		var thisRequest = maxRequest++;
 		$.ajax({
 			url : ajaxTarget,
 			success : function(content){
-				showState(ajaxTarget,content,true);
-				that.removeClass('pending');
+				if(thisRequest != maxRequest-1){
+					// Another request has already been requested.
+					return false;
+				} else {
+					showState(ajaxTarget,content,true);
+					that.removeClass('pending');
+				}
 			},
 			error : function(){
 				window.location(ajaxTarget);
